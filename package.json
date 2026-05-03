@@ -1,0 +1,19 @@
+{
+  "name": "webapp-express",
+  "version": "1.0.0",
+  "description": "Esercizio express + db",
+  "repository": {
+    "type": "git",
+    "url": "webapp-express"
+  },
+  "license": "ISC",
+  "author": "PP",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
