@@ -2,10 +2,10 @@ const db = require('../db/connection');
 
 
 // INDEX
-function index(req, res) {
+function index(req, res, next) {
   db.query('SELECT * FROM movies', (err, results) => {
     if (err) {
-      return res.status(500).json({ error: err.message });
+      return next(err);
     }
 
     res.json(results);
@@ -13,7 +13,7 @@ function index(req, res) {
 }
 
 // SHOW
-function show(req, res) {
+function show(req, res, next) {
   const id = req.params.id;
 
   const movieSql = 'SELECT * FROM movies WHERE id = ?';
@@ -21,7 +21,7 @@ function show(req, res) {
 
   db.query(movieSql, [id], (err, movieResults) => {
     if (err) {
-      return res.status(500).json({ error: err.message });
+      return next(err);
     }
 
     if (movieResults.length === 0) {
@@ -32,7 +32,7 @@ function show(req, res) {
 
     db.query(reviewsSql, [id], (err, reviewsResults) => {
       if (err) {
-        return res.status(500).json({ error: err.message });
+        return next(err);
       }
 
       movie.reviews = reviewsResults;
