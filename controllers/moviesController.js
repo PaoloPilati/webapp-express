@@ -8,10 +8,6 @@ function index(req, res) {
       return res.status(500).json({ error: err.message });
     }
 
-    results.forEach(movie => {
-      movie.image_url = getImageUrl(movie.image);
-    });
-
     res.json(results);
   });
 }
@@ -33,7 +29,6 @@ function show(req, res) {
     }
 
     const movie = movieResults[0];
-    movie.image_url = getImageUrl(movie.image);
 
     db.query(reviewsSql, [id], (err, reviewsResults) => {
       if (err) {
@@ -46,9 +41,5 @@ function show(req, res) {
     });
   });
 }
-
-
-
-
 
 module.exports = { index, show };
