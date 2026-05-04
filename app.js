@@ -1,17 +1,25 @@
 const express = require('express');
 const app = express();
-
+const notFound = require('./middlewares/notFound');
+const errorHandler = require('./middlewares/errorHandler');
 const moviesRoutes = require('./routes/moviesRoutes');
 
 // middleware JSON
 app.use(express.json());
 
-// routes
-app.use('/movies', moviesRoutes);
-
 //middleware per le immagini
 app.use(express.static('public'));
 
+// routes
+app.use('/movies', moviesRoutes);
+
+//Middlware 404 (N.B.: DOPO LE ROUTES)
+app.use(notFound);
+
+//Middleware errorHandler
+app.use(errorHandler);
+
+//Listener
 app.listen(3000, () => {
   console.log('Server attivo su http://localhost:3000');
 });
