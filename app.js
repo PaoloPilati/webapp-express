@@ -11,6 +11,9 @@ app.use(express.json());
 //middleware per le immagini
 app.use(express.static('public'));
 
+//CORS
+app.use(cors());
+
 // routes
 app.use('/movies', moviesRoutes);
 

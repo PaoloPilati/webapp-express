@@ -10,11 +10,8 @@ const connection = mysql.createConnection({
 });
 
 connection.connect((err) => {
-  if (err) {
-    console.error('Connection failure!', err);
-    return;
-  }
-  console.log('Connected to db!');
+  if (err) throw err;
+  console.log('Connected to MySQL!');
 });
 
 //check
