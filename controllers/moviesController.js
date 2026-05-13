@@ -1,9 +1,9 @@
-const db = require('../db/connection');
+const connection = require('../db/connection');
 
 
 // INDEX
 function index(req, res, next) {
-  db.query('SELECT * FROM movies', (err, results) => {
+  connection.query('SELECT * FROM movies', (err, results) => {
     if (err) {
       return next(err);
     }
@@ -16,21 +16,20 @@ function index(req, res, next) {
 function show(req, res, next) {
   const id = req.params.id;
 
-  const movieSql = 'SELECT * FROM movies WHERE id = ?';
+  const movieSql = 'SELECT * FROM movies WHERE id = ?'; // ?, [id] = Prepared statement per validazione id
   const reviewsSql = 'SELECT * FROM reviews WHERE movie_id = ?';
 
-  db.query(movieSql, [id], (err, movieResults) => {
+  connection.query(movieSql, [id], (err, movieResults) => {
     if (err) {
       return next(err);
     }
-
     if (movieResults.length === 0) {
       return res.status(404).json({ error: 'Movie not found' });
     }
 
     const movie = movieResults[0];
 
-    db.query(reviewsSql, [id], (err, reviewsResults) => {
+    connection.query(reviewsSql, [id], (err, reviewsResults) => {
       if (err) {
         return next(err);
       }
@@ -42,4 +41,9 @@ function show(req, res, next) {
   });
 }
 
-module.exports = { index, show };
+function storeReview(req, res) {
+  res.send("ok");
+}
+
+
+module.exports = { index, show, storeReview };

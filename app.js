@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const port = process.env.PORT
 const notFound = require('./middlewares/notFound');
 const errorHandler = require('./middlewares/errorHandler');
-const moviesRoutes = require('./routes/moviesRoutes');
+const moviesRoutes = require('./routes/moviesRoutes.js');
 
 // middleware JSON
 app.use(express.json());
@@ -14,7 +15,7 @@ app.use(express.static('public'));
 //CORS
 app.use(cors());
 
-// routes
+// routing
 app.use('/movies', moviesRoutes);
 
 //Middlware 404 (N.B.: DOPO LE ROUTES)

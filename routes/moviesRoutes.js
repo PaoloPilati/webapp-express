@@ -3,14 +3,14 @@ const router = express.Router();
 
 const moviesController = require('../controllers/moviesController');
 
-// INDEX ---> GET /posts
+// INDEX ---> GET /movies
 router.get('/', moviesController.index);
 
-// SHOW ---> GET /posts/:id
+// SHOW ---> GET /movies/:id
 router.get('/:id', moviesController.show);
 
-// // STORE ---> POST /posts
-// router.post("/", moviesController.store);
+// STORE (REVIEW) ---> POST /movies/:id
+router.post("/:id/reviews", moviesController.storeReview);
 
 // // UPDATE ---> PUT /posts/:id
 // router.put("/:id", moviesController.update);
