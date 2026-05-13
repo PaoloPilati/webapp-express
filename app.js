@@ -17,7 +17,9 @@ app.use(express.static('public'));
 app.use(setImagePath);
 
 //CORS
-app.use(cors());
+app.use(cors({
+  origin: process.env.FE_APP
+}));
 
 // routing
 app.use('/movies', moviesRoutes);
