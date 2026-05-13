@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT
-const notFound = require('./middlewares/notFound');
-const errorHandler = require('./middlewares/errorHandler');
+const setImagePath = require('./middlewares/setImagePath.js');
+const notFound = require('./middlewares/notFound.js');
+const errorHandler = require('./middlewares/errorHandler.js');
 const moviesRoutes = require('./routes/moviesRoutes.js');
 
 // middleware JSON
@@ -11,6 +12,9 @@ app.use(express.json());
 
 //middleware per le immagini
 app.use(express.static('public'));
+
+//indirizzamento dinamico immagini
+app.use(setImagePath);
 
 //CORS
 app.use(cors());

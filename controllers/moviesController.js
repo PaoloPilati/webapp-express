@@ -1,14 +1,20 @@
 const connection = require('../db/connection');
 
 
-// INDEX
 function index(req, res, next) {
   connection.query('SELECT * FROM movies', (err, results) => {
     if (err) {
       return next(err);
     }
 
-    res.json(results);
+    const updatedResults = results.map(movie => {
+      return {
+        ...movie,
+        image: req.imagePath + movie.image
+      };
+    });
+
+    res.json(updatedResults);
   });
 }
 
@@ -28,7 +34,7 @@ function show(req, res, next) {
     }
 
     const movie = movieResults[0];
-
+    movie.image = req.imagePath + movie.image;
     connection.query(reviewsSql, [id], (err, reviewsResults) => {
       if (err) {
         return next(err);
