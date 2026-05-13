@@ -41,8 +41,26 @@ function show(req, res, next) {
   });
 }
 
-function storeReview(req, res) {
-  res.send("ok");
+// STORE (reviews)
+function storeReview(req, res, next) {
+
+  const movieId = req.params.id;
+  const { text, vote } = req.body;
+
+  const sql = `INSERT INTO reviews (movie_id, text, vote) VALUES (?, ?, ?)`;
+
+  connection.query(sql, [movieId, text, vote], (err, result) => {
+
+    if (err) {
+      return next(err);
+    }
+
+    res.status(201).json({
+      message: "Review created",
+      id: result.insertId
+    });
+
+  });
 }
 
 
