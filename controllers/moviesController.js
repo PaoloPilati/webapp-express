@@ -7,7 +7,7 @@ function index(req, res, next) {
       return next(err);
     }
 
-    const updatedResults = results.map(movie => {
+    const updatedResults = results.map(movie => { //cambiare nome const!!!
       return {
         ...movie,
         image: req.imagePath + movie.image
@@ -25,7 +25,7 @@ function show(req, res, next) {
   const movieSql = 'SELECT * FROM movies WHERE id = ?'; // ?, [id] = Prepared statement per validazione id
   const reviewsSql = 'SELECT * FROM reviews WHERE movie_id = ?';
 
-  connection.query(movieSql, [id], (err, movieResults) => {
+  connection.query(movieSql, [id], (err, movieResults) => { //utilizzo JOIN per avere una query sola
     if (err) {
       return next(err);
     }
@@ -50,20 +50,19 @@ function show(req, res, next) {
 // STORE (reviews)
 function storeReview(req, res, next) {
 
-  const movieId = req.params.id;
-  const { text, vote } = req.body;
+  const { text, name, vote } = req.body;
+  const sql = `INSERT INTO reviews (text, name, vote, movie_Id) VALUES (?, ?, ?, ?)`;
 
-  const sql = `INSERT INTO reviews (movie_id, text, vote) VALUES (?, ?, ?)`;
-
-  connection.query(sql, [movieId, text, vote], (err, result) => {
+  connection.query(sql, [text, name, vote, movie_Id], (err, reviewResult) => {
 
     if (err) {
       return next(err);
     }
 
-    res.status(201).json({
+    res.status(201);
+    res.json({
       message: "Review created",
-      id: result.insertId
+      id: reviewResult.insertId
     });
 
   });
