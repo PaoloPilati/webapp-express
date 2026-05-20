@@ -5,7 +5,7 @@ const port = process.env.PORT
 const setImagePath = require('./middlewares/setImagePath.js');
 const notFound = require('./middlewares/notFound.js');
 const errorHandler = require('./middlewares/errorHandler.js');
-const moviesRoutes = require('./routes/moviesRoutes.js');
+const moviesRouter = require('./routes/moviesRouter.js');
 
 // middleware JSON
 app.use(express.json());
@@ -22,7 +22,7 @@ app.use(cors({
 }));
 
 // routing
-app.use('/movies', moviesRoutes);
+app.use('/api/movies', moviesRouter);
 
 //Middlware 404 (N.B.: DOPO LE ROUTES)
 app.use(notFound);

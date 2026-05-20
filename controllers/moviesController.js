@@ -49,11 +49,11 @@ function show(req, res, next) {
 
 // STORE (reviews)
 function storeReview(req, res, next) {
-
+  const id = req.params.id;
   const { text, name, vote } = req.body;
   const sql = `INSERT INTO reviews (text, name, vote, movie_Id) VALUES (?, ?, ?, ?)`;
 
-  connection.query(sql, [text, name, vote, movie_Id], (err, reviewResult) => {
+  connection.query(sql, [text, name, vote, id], (err, reviewResult) => {
 
     if (err) {
       return next(err);
