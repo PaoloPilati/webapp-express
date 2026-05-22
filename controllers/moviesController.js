@@ -23,9 +23,9 @@ function show(req, res, next) {
   const id = req.params.id;
 
   const movieSql = 'SELECT * FROM movies WHERE id = ?'; // ?, [id] = Prepared statement per validazione id
-  const reviewsSql = 'SELECT * FROM reviews WHERE movie_id = ?';
+  const reviewsSql = 'SELECT * FROM reviews WHERE movie_id = ?'; //utilizzo JOIN per avere una query sola!!!
 
-  connection.query(movieSql, [id], (err, movieResults) => { //utilizzo JOIN per avere una query sola
+  connection.query(movieSql, [id], (err, movieResults) => {
     if (err) {
       return next(err);
     }
@@ -68,5 +68,25 @@ function storeReview(req, res, next) {
   });
 }
 
+// STORE (movies)
+function storeMovie(req, res) {
+  const { title, director, image, abstract} = req.body;
+  
+  const imageName = `${req.file.filename}`;
 
-module.exports = { index, show, storeReview };
+  const sql = `INSERT INTO movies (title, director, image, abstract) VALUES (?, ?, ?, ?)`;
+
+  connection.query(sql, [title, director, imageName, abstract], (err, movieResult) => {
+    if (err) {
+      console.log(err)
+      return next(new Error("Internal server error"));
+    }
+    res.status(201).json({
+      status: "success",
+      message: "Movie created successfully!"
+    })
+  }
+}
+
+
+module.exports = { index, show, storeReview, storeMovie };
